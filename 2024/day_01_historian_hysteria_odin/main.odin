@@ -33,6 +33,19 @@ parse_data :: proc(input: []u8) -> (list_a, list_b: [dynamic]int) {
 	return list_a, list_b
 }
 
+part_a :: proc(list_a: []int, list_b: []int) -> int {
+	accumulator := 0
+	for i := 0; i < len(list_a); i += 1 {
+		value_a := list_a[i]
+		value_b := list_b[i]
+
+		distance := max(value_a, value_b) - min(value_a, value_b)
+		accumulator += distance
+	}
+
+	return accumulator
+}
+
 main :: proc() {
 	example_data, ok := os.read_entire_file("input_data.txt", context.allocator)
 	defer delete(example_data, context.allocator)
@@ -44,14 +57,6 @@ main :: proc() {
 	slice.sort(list_a[:])
 	slice.sort(list_b[:])
 
-	accumulator := 0
-	for i := 0; i < len(list_a); i += 1 {
-		value_a := list_a[i]
-		value_b := list_b[i]
-
-		distance := max(value_a, value_b) - min(value_a, value_b)
-		accumulator += distance
-	}
-
-	fmt.printfln("The searched result is: %i", accumulator)
+	result_a := part_a(list_a[:], list_b[:])
+	fmt.printfln("The searched result is: %i", result_a)
 }

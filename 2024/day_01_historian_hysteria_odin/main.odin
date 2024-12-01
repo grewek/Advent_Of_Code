@@ -7,14 +7,7 @@ import "core:strconv"
 import "core:strings"
 
 parse_data :: proc(input: []u8) -> (list_a, list_b: [dynamic]int) {
-	example_data, ok := os.read_entire_file("input_data.txt", context.allocator)
-
-	if !ok {
-		return
-	}
-	defer delete(example_data, context.allocator)
-
-	it := string(example_data)
+	it := string(input)
 
 	for line in strings.split_lines_iterator(&it) {
 		if line == "" {
